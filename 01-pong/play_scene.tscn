@@ -1,12 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://degn05187kmo0"]
+[gd_scene load_steps=13 format=3 uid="uid://degn05187kmo0"]
 
 [ext_resource type="Script" uid="uid://cdqocq3uugqer" path="res://paddle.gd" id="1_memhf"]
 [ext_resource type="PackedScene" uid="uid://d5r30xs0try7" path="res://human_controller.tscn" id="2_0tbyp"]
+[ext_resource type="Texture2D" uid="uid://to4x5unbxmit" path="res://ball.svg" id="3_1p5oe"]
 
 [sub_resource type="Gradient" id="Gradient_gl7u2"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.4, 0.6, 1)
-colors = PackedColorArray(0.39, 0.21775001, 0.1833, 1, 0.3882353, 0.21960784, 0.18431373, 1, 0.21568628, 0.32156864, 0.27450982, 1, 0.2176, 0.32, 0.27392003, 1)
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.46, 0.23, 0.115, 1)
 metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_memhf"]
@@ -15,7 +16,8 @@ width = 1024
 height = 768
 
 [sub_resource type="Gradient" id="Gradient_1p5oe"]
-colors = PackedColorArray(0.23519999, 0.42, 0.41076002, 1, 0.42873004, 0.7565435, 0.43855125, 1)
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_a0jw4"]
 gradient = SubResource("Gradient_1p5oe")
@@ -24,12 +26,17 @@ width = 32
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl7u2"]
 size = Vector2(32, 120)
 
-[sub_resource type="Gradient" id="Gradient_0tbyp"]
-colors = PackedColorArray(0.80396354, 0.28899968, 0.31400985, 1, 0.8940056, 0.44336286, 0.31979603, 1)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1p5oe"]
+normal = Vector2(0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1p5oe"]
-gradient = SubResource("Gradient_0tbyp")
-width = 32
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0tbyp"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1p5oe"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1p5oe"]
+radius = 16.0
 
 [node name="PlayScene" type="Node2D"]
 
@@ -39,7 +46,7 @@ texture = SubResource("GradientTexture2D_memhf")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="PaddleLeft" type="CharacterBody2D" parent="."]
+[node name="PaddleLeft" type="AnimatableBody2D" parent="."]
 position = Vector2(-450, 0)
 script = ExtResource("1_memhf")
 
@@ -52,17 +59,53 @@ shape = SubResource("RectangleShape2D_gl7u2")
 
 [node name="HumanController" parent="PaddleLeft" instance=ExtResource("2_0tbyp")]
 
-[node name="PaddleRight" type="CharacterBody2D" parent="."]
+[node name="PaddleRight" type="AnimatableBody2D" parent="."]
 position = Vector2(450, 0)
 script = ExtResource("1_memhf")
 
 [node name="Sprite2D" type="Sprite2D" parent="PaddleRight"]
-rotation = 3.1415927
+rotation = -3.1415925
 scale = Vector2(1, 120)
-texture = SubResource("GradientTexture1D_1p5oe")
+texture = SubResource("GradientTexture1D_a0jw4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PaddleRight"]
 shape = SubResource("RectangleShape2D_gl7u2")
 
 [node name="HumanController" parent="PaddleRight" instance=ExtResource("2_0tbyp")]
 player = 1
+
+[node name="BorderUp" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -350)
+
+[node name="Sprite2D" type="Sprite2D" parent="BorderUp"]
+scale = Vector2(32, 16)
+texture = SubResource("GradientTexture1D_a0jw4")
+offset = Vector2(0, -0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderUp"]
+shape = SubResource("WorldBoundaryShape2D_1p5oe")
+
+[node name="BorderDown" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 350)
+
+[node name="Sprite2D" type="Sprite2D" parent="BorderDown"]
+scale = Vector2(32, 16)
+texture = SubResource("GradientTexture1D_a0jw4")
+offset = Vector2(0, 0.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderDown"]
+shape = SubResource("WorldBoundaryShape2D_0tbyp")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_1p5oe")
+continuous_cd = 2
+linear_velocity = Vector2(400, 200)
+linear_damp_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+texture = ExtResource("3_1p5oe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_1p5oe")
