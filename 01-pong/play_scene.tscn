@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://degn05187kmo0"]
+[gd_scene load_steps=17 format=3 uid="uid://degn05187kmo0"]
 
 [ext_resource type="Script" uid="uid://cdqocq3uugqer" path="res://paddle.gd" id="1_memhf"]
 [ext_resource type="PackedScene" uid="uid://d5r30xs0try7" path="res://human_controller.tscn" id="2_0tbyp"]
 [ext_resource type="Texture2D" uid="uid://to4x5unbxmit" path="res://ball.svg" id="3_1p5oe"]
 [ext_resource type="Script" uid="uid://fquha34l6vco" path="res://ball.gd" id="3_a0jw4"]
+[ext_resource type="FontFile" uid="uid://de0sx27mcnrht" path="res://Courier_Prime/CourierPrime-Regular.ttf" id="5_5i074"]
+[ext_resource type="Script" uid="uid://dxe8iickg1q6s" path="res://score_label.gd" id="6_5uqcj"]
 
 [sub_resource type="Gradient" id="Gradient_gl7u2"]
 interpolation_mode = 2
@@ -40,79 +42,107 @@ normal = Vector2(0, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_1p5oe"]
 radius = 16.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_5uqcj"]
+font = ExtResource("5_5i074")
+font_size = 80
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.78431374)
+shadow_offset = Vector2(2, 2)
+
 [node name="PlayScene" type="Node2D"]
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="GameElements" type="Node2D" parent="."]
+
+[node name="Background" type="Sprite2D" parent="GameElements"]
 texture_filter = 1
 texture = SubResource("GradientTexture2D_memhf")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="GameElements"]
 
-[node name="PaddleLeft" type="AnimatableBody2D" parent="."]
+[node name="PaddleLeft" type="AnimatableBody2D" parent="GameElements"]
 position = Vector2(-450, 0)
 script = ExtResource("1_memhf")
 
-[node name="Sprite2D" type="Sprite2D" parent="PaddleLeft"]
+[node name="Sprite2D" type="Sprite2D" parent="GameElements/PaddleLeft"]
 scale = Vector2(1, 120)
 texture = SubResource("GradientTexture1D_a0jw4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PaddleLeft"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameElements/PaddleLeft"]
 position = Vector2(15, 0)
 shape = SubResource("SegmentShape2D_1p5oe")
 
-[node name="HumanController" parent="PaddleLeft" instance=ExtResource("2_0tbyp")]
+[node name="HumanController" parent="GameElements/PaddleLeft" instance=ExtResource("2_0tbyp")]
 
-[node name="PaddleRight" type="AnimatableBody2D" parent="."]
+[node name="PaddleRight" type="AnimatableBody2D" parent="GameElements"]
 position = Vector2(450, 0)
 script = ExtResource("1_memhf")
 
-[node name="Sprite2D" type="Sprite2D" parent="PaddleRight"]
+[node name="Sprite2D" type="Sprite2D" parent="GameElements/PaddleRight"]
 rotation = -3.1415925
 scale = Vector2(1, 120)
 texture = SubResource("GradientTexture1D_a0jw4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PaddleRight"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameElements/PaddleRight"]
 position = Vector2(-15, 0)
 shape = SubResource("SegmentShape2D_a0jw4")
 
-[node name="HumanController" parent="PaddleRight" instance=ExtResource("2_0tbyp")]
+[node name="HumanController" parent="GameElements/PaddleRight" instance=ExtResource("2_0tbyp")]
 player = 1
 
-[node name="BorderUp" type="StaticBody2D" parent="."]
+[node name="BorderUp" type="StaticBody2D" parent="GameElements"]
 unique_name_in_owner = true
 position = Vector2(0, -350)
 
-[node name="Sprite2D" type="Sprite2D" parent="BorderUp"]
+[node name="Sprite2D" type="Sprite2D" parent="GameElements/BorderUp"]
 scale = Vector2(32, 16)
 texture = SubResource("GradientTexture1D_a0jw4")
 offset = Vector2(0, -0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderUp"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameElements/BorderUp"]
 shape = SubResource("WorldBoundaryShape2D_1p5oe")
 
-[node name="BorderDown" type="StaticBody2D" parent="."]
+[node name="BorderDown" type="StaticBody2D" parent="GameElements"]
 unique_name_in_owner = true
 position = Vector2(0, 350)
 
-[node name="Sprite2D" type="Sprite2D" parent="BorderDown"]
+[node name="Sprite2D" type="Sprite2D" parent="GameElements/BorderDown"]
 scale = Vector2(32, 16)
 texture = SubResource("GradientTexture1D_a0jw4")
 offset = Vector2(0, 0.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderDown"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameElements/BorderDown"]
 shape = SubResource("WorldBoundaryShape2D_0tbyp")
 
-[node name="Ball" type="CharacterBody2D" parent="."]
+[node name="Ball" type="CharacterBody2D" parent="GameElements"]
 motion_mode = 1
 script = ExtResource("3_a0jw4")
 
-[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+[node name="Sprite2D" type="Sprite2D" parent="GameElements/Ball"]
 texture = ExtResource("3_1p5oe")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameElements/Ball"]
 shape = SubResource("CircleShape2D_1p5oe")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Ball"]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="GameElements/Ball"]
 rect = Rect2(-50, -50, 100, 100)
 
-[connection signal="screen_exited" from="Ball/VisibleOnScreenNotifier2D" to="Ball" method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 30
+
+[node name="CenterContainer" type="CenterContainer" parent="GUI/MarginContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="GUI/MarginContainer/CenterContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+text = "0 | 0"
+label_settings = SubResource("LabelSettings_5uqcj")
+horizontal_alignment = 1
+script = ExtResource("6_5uqcj")
+
+[connection signal="screen_exited" from="GameElements/Ball/VisibleOnScreenNotifier2D" to="GameElements/Ball" method="_on_visible_on_screen_notifier_2d_screen_exited"]

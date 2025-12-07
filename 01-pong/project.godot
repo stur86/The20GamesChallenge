@@ -10,9 +10,13 @@ config_version=5
 
 [application]
 
-config/name="20 Games Challenge - Pong"
+config/name="20 Games Challenge - 01 - Pong"
 run/main_scene="uid://degn05187kmo0"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[autoload]
+
+Referee="*res://referee.gd"
 
 [display]
 

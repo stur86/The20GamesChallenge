@@ -1,7 +1,6 @@
 extends Node2D
 
-enum Player {Player1, Player2}
-@export var player: Player = Player.Player1
+@export var player: Referee.Player = Referee.Player.Player1
 
 var up_code: String
 var down_code: String
@@ -10,7 +9,7 @@ func _init() -> void:
 	set_process_input(true)
 	
 func _enter_tree() -> void:
-	if player == Player.Player1:
+	if player == Referee.Player.Player1:
 		up_code = "Player1_Up"
 		down_code = "Player1_Down"
 	else:

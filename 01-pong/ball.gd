@@ -32,5 +32,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	# We're out of the screen, reset
+	# We're out of the screen, update score and reset
+	# Where are we?
+	var x = global_position.x
+	var scoring_player: Referee.Player
+	if x < 0:
+		# Player 2 scored
+		scoring_player = Referee.Player.Player2
+	else:
+		scoring_player = Referee.Player.Player1
+	Referee.update_score(scoring_player)
 	reset()
