@@ -1,11 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://degn05187kmo0"]
+[gd_scene load_steps=18 format=3 uid="uid://degn05187kmo0"]
 
-[ext_resource type="Script" uid="uid://cdqocq3uugqer" path="res://paddle.gd" id="1_memhf"]
+[ext_resource type="Script" uid="uid://cdqocq3uugqer" path="res://scripts/paddle.gd" id="1_memhf"]
 [ext_resource type="PackedScene" uid="uid://d5r30xs0try7" path="res://human_controller.tscn" id="2_0tbyp"]
-[ext_resource type="Texture2D" uid="uid://to4x5unbxmit" path="res://ball.svg" id="3_1p5oe"]
-[ext_resource type="Script" uid="uid://fquha34l6vco" path="res://ball.gd" id="3_a0jw4"]
-[ext_resource type="FontFile" uid="uid://de0sx27mcnrht" path="res://Courier_Prime/CourierPrime-Regular.ttf" id="5_5i074"]
-[ext_resource type="Script" uid="uid://dxe8iickg1q6s" path="res://score_label.gd" id="6_5uqcj"]
+[ext_resource type="Texture2D" uid="uid://to4x5unbxmit" path="res://assets/ball.svg" id="3_1p5oe"]
+[ext_resource type="Script" uid="uid://fquha34l6vco" path="res://scripts/ball.gd" id="3_a0jw4"]
+[ext_resource type="AudioStream" uid="uid://bkoduskw8cyum" path="res://assets/hitHurt.wav" id="3_k2wtv"]
+[ext_resource type="FontFile" uid="uid://de0sx27mcnrht" path="res://assets/Courier_Prime/CourierPrime-Regular.ttf" id="5_5i074"]
+[ext_resource type="Script" uid="uid://dxe8iickg1q6s" path="res://scripts/score_label.gd" id="6_5uqcj"]
 
 [sub_resource type="Gradient" id="Gradient_gl7u2"]
 interpolation_mode = 2
@@ -58,6 +59,7 @@ texture_filter = 1
 texture = SubResource("GradientTexture2D_memhf")
 
 [node name="Camera2D" type="Camera2D" parent="GameElements"]
+process_callback = 0
 
 [node name="PaddleLeft" type="AnimatableBody2D" parent="GameElements"]
 position = Vector2(-450, 0)
@@ -72,6 +74,11 @@ position = Vector2(15, 0)
 shape = SubResource("SegmentShape2D_1p5oe")
 
 [node name="HumanController" parent="GameElements/PaddleLeft" instance=ExtResource("2_0tbyp")]
+
+[node name="Bump" type="AudioStreamPlayer2D" parent="GameElements/PaddleLeft"]
+position = Vector2(-900, 0)
+stream = ExtResource("3_k2wtv")
+attenuation = 0.5
 
 [node name="PaddleRight" type="AnimatableBody2D" parent="GameElements"]
 position = Vector2(450, 0)
@@ -88,6 +95,11 @@ shape = SubResource("SegmentShape2D_a0jw4")
 
 [node name="HumanController" parent="GameElements/PaddleRight" instance=ExtResource("2_0tbyp")]
 player = 1
+
+[node name="Bump" type="AudioStreamPlayer2D" parent="GameElements/PaddleRight"]
+position = Vector2(-900, 0)
+stream = ExtResource("3_k2wtv")
+attenuation = 0.5
 
 [node name="BorderUp" type="StaticBody2D" parent="GameElements"]
 unique_name_in_owner = true

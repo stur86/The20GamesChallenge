@@ -25,4 +25,6 @@ func get_bounce_velocity(v0: Vector2, cpos: Vector2) -> Vector2:
 	# Get the velocity outside of a bounce. Cpos is the collision position
 	# in global coordinates
 	var dy = (cpos.y-global_position.y)	
+	# Additionally, play the bump sound
+	$Bump.play()
 	return Vector2(-v0.x, v0.y+2.0*dy/height*vel_edge_bonus)

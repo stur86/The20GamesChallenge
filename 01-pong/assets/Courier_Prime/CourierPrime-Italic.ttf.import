@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://de0sx27mcnrht"
-path="res://.godot/imported/CourierPrime-Regular.ttf-f14fa7e135a4ff29509160e124f55703.fontdata"
+uid="uid://e12afw2n5tdc"
+path="res://.godot/imported/CourierPrime-Italic.ttf-b7e5f9da8eba534cb21cafa3b58402ad.fontdata"
 
 [deps]
 
-source_file="res://Courier_Prime/CourierPrime-Regular.ttf"
-dest_files=["res://.godot/imported/CourierPrime-Regular.ttf-f14fa7e135a4ff29509160e124f55703.fontdata"]
+source_file="res://assets/Courier_Prime/CourierPrime-Italic.ttf"
+dest_files=["res://.godot/imported/CourierPrime-Italic.ttf-b7e5f9da8eba534cb21cafa3b58402ad.fontdata"]
 
 [params]
 
