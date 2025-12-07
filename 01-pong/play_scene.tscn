@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://degn05187kmo0"]
+
+[ext_resource type="Script" uid="uid://cdqocq3uugqer" path="res://paddle.gd" id="1_memhf"]
+[ext_resource type="PackedScene" uid="uid://d5r30xs0try7" path="res://human_controller.tscn" id="2_0tbyp"]
+
+[sub_resource type="Gradient" id="Gradient_gl7u2"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.4, 0.6, 1)
+colors = PackedColorArray(0.39, 0.21775001, 0.1833, 1, 0.3882353, 0.21960784, 0.18431373, 1, 0.21568628, 0.32156864, 0.27450982, 1, 0.2176, 0.32, 0.27392003, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_memhf"]
+gradient = SubResource("Gradient_gl7u2")
+width = 1024
+height = 768
+
+[sub_resource type="Gradient" id="Gradient_1p5oe"]
+colors = PackedColorArray(0.23519999, 0.42, 0.41076002, 1, 0.42873004, 0.7565435, 0.43855125, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a0jw4"]
+gradient = SubResource("Gradient_1p5oe")
+width = 32
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl7u2"]
+size = Vector2(32, 120)
+
+[sub_resource type="Gradient" id="Gradient_0tbyp"]
+colors = PackedColorArray(0.80396354, 0.28899968, 0.31400985, 1, 0.8940056, 0.44336286, 0.31979603, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1p5oe"]
+gradient = SubResource("Gradient_0tbyp")
+width = 32
+
+[node name="PlayScene" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("GradientTexture2D_memhf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PaddleLeft" type="CharacterBody2D" parent="."]
+position = Vector2(-450, 0)
+script = ExtResource("1_memhf")
+
+[node name="Sprite2D" type="Sprite2D" parent="PaddleLeft"]
+scale = Vector2(1, 120)
+texture = SubResource("GradientTexture1D_a0jw4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PaddleLeft"]
+shape = SubResource("RectangleShape2D_gl7u2")
+
+[node name="HumanController" parent="PaddleLeft" instance=ExtResource("2_0tbyp")]
+
+[node name="PaddleRight" type="CharacterBody2D" parent="."]
+position = Vector2(450, 0)
+script = ExtResource("1_memhf")
+
+[node name="Sprite2D" type="Sprite2D" parent="PaddleRight"]
+rotation = 3.1415927
+scale = Vector2(1, 120)
+texture = SubResource("GradientTexture1D_1p5oe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PaddleRight"]
+shape = SubResource("RectangleShape2D_gl7u2")
+
+[node name="HumanController" parent="PaddleRight" instance=ExtResource("2_0tbyp")]
+player = 1
